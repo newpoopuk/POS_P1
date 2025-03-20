@@ -18,6 +18,14 @@ const LoginPage = ({ onLogin }) => {
     }
     setLoading(true);
     try {
+      // Development mock login - remove in production
+      if (username === 'test' && password === 'test123') {
+        console.log('Using mock development credentials');
+        onLogin('Test User', 'mock-auth-token', 999);
+        setLoading(false);
+        return;
+      }
+
       const response = await axios.post('http://localhost:8000/users/authenticate/', {
         username: username,
         password: password,
